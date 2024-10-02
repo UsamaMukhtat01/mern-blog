@@ -26,7 +26,7 @@ export default function Headers() {
         <AiOutlineSearch />
       </Button>
 
-      <div className="flex gap-2 px-10 md:order-2">
+      <div className="flex gap-2 px-10 lg:order-2">
         <Button className="w-12 h-10 hidden sm:inline" color="red" pill>
           <FaMoon />
         </Button>
@@ -37,7 +37,7 @@ export default function Headers() {
       </div>
 
       {/* Make sure the links are visible */}
-      <Navbar.Collapse className="md:flex md:items-center md:space-x-4">
+      <Navbar.Collapse className="md:flex md:items-center md:space-x-4 md:w-auto">
         <Navbar.Link className={`${path==='/'? 'text-blue-600' : ''}`} active={path === "/"} as={"div"}>
           <Link to="/">Home</Link>
         </Navbar.Link>
