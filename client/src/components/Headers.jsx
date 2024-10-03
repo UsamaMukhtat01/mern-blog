@@ -1,10 +1,12 @@
-import { Navbar, TextInput, Button } from 'flowbite-react';
+import { Navbar, TextInput, Button, Dropdown, Avatar } from 'flowbite-react';
 import { Link, useLocation } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon } from 'react-icons/fa';
+import {useSelector} from 'react-redux';
 
 export default function Headers() {
   const path = useLocation().pathname;
+  const {currentUser} = useSelector(state => state.user)
 
   return (
     <Navbar className="border-b-2" fluid rounded>
@@ -30,9 +32,36 @@ export default function Headers() {
         <Button className="w-12 h-10 hidden sm:inline" color="red" pill>
           <FaMoon />
         </Button>
-        <Link to="sign-in">
-          <Button className="bg-gradient-to-r from-cyan-900 to-blue-900">Sign In</Button>
-        </Link>
+        {currentUser? (
+          <Dropdown
+          className=''
+            arrowIcon={false}
+            inline
+            label={
+              <Avatar
+              alt='user'
+              img={currentUser.profilePicture}
+              rounded
+            />
+          }
+          >
+            <Dropdown.Header>
+              <span className='block text-sm'>@{currentUser.username}</span>
+              <span className='block text-sm font-medium truncate'>{currentUser.email}</span>
+            </Dropdown.Header>
+            <Link to={'/dashboard?tab=profile'}>
+            Profile
+            </Link>
+            <Dropdown.Divider/>
+            <Dropdown.Item>
+              Sign Out
+            </Dropdown.Item>
+          </Dropdown>
+        ):(
+          <Link to="sign-in">
+            <Button className="bg-gradient-to-r from-cyan-900 to-blue-900">Sign In</Button>
+          </Link>
+        )}
         <Navbar.Toggle />
       </div>
 
