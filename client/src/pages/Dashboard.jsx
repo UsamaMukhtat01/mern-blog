@@ -20,10 +20,10 @@ export default function Dashboard() {
       <DashSidebar/>
       </div>
 
-      <div>
+      {/* <div> */}
       {/* profile */}
       {tab==='profile' && <DashProfile/>}
-      </div>
+      {/* </div> */}
 
     </div>
   </div>;
