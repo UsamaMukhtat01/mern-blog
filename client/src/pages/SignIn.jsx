@@ -3,6 +3,7 @@ import { TextInput, Label, Button, Alert, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {signInStart, signInSuccess, signInFailure} from '../redux/user/userSlice'
+import OAuth from '../components/OAuth';
 
 export default function SignIn() {
 
@@ -71,7 +72,7 @@ export default function SignIn() {
           <Label value='Your password' />
           <TextInput type='text' placeholder='Password' id='password' onChange={handleChange}></TextInput>
           </div>
-          <Button gradientDuoTone='purpleToBlue' type='submit' disabled={loading}>
+          <Button className='bg-gradient-to-br from-green-400 to-blue-600' type='submit' disabled={loading}>
             {loading? (
               <>
               <Spinner size='sm'/>
@@ -79,6 +80,7 @@ export default function SignIn() {
               </>):
             ('Sign In')}
           </Button>
+          <OAuth/>
           { errorMessage && (
               <Alert className='mt-5' color='failure'>
                 {errorMessage}
@@ -87,7 +89,7 @@ export default function SignIn() {
         </form>
           <div className='flex gap-2 mt-5 text-sm'>
               <span>Don't Have an account?</span>
-            <Link to='/sign-in' className='text-blue-500'>
+            <Link to='/sign-up' className='text-blue-500'>
               SignUp
             </Link>
           </div>
