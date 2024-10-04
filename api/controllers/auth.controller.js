@@ -18,6 +18,10 @@ export const signup = async (req, res, next) => {
   ) {
     next(errorHandler(400, "All fields are mendatory"));
   }
+  // Add function to set condition username must be in lowercase
+  if (username != username.toLowerCase()){
+    return next(errorHandler(400, "Username must be in lowercase"));
+  } 
 
   const hashedPassword = bcryptjs.hashSync(password, 10);
 
