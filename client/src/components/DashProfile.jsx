@@ -11,7 +11,7 @@ import {
 import { app } from "../firebase";
 import { CircularProgressbar } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
-import { updateFailure, updateStart, updateSuccess, deleteUserFailure, deleteUserStart, deleteUserSuccess } from "../redux/user/userSlice";
+import { updateFailure, updateStart, updateSuccess, deleteUserFailure, signOutSuccess, deleteUserSuccess } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
 
@@ -27,7 +27,6 @@ export default function DashProfile() {
   const [imageFileUploading, setImageFileUploading] = useState(false);
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [showModal, setShowModal] = useState(false)
-  // const [deleteUser, setDeleteUser] = useState(null)
 
   useEffect(() => {
     // Initialize formData with currentUser values
@@ -141,7 +140,6 @@ setShowModal(false)
     const data = await res.json();
     if(res.ok){
       dispatch(deleteUserSuccess(data))
-      setDeleteUser("User deleted successfully UI")
     }else{
       dispatch(deleteUserFailure(data.message))
       // setDeleteUser("You are not authenticated to delete this user")
@@ -151,6 +149,19 @@ setShowModal(false)
   }
 }
 
+const handlSignOut = async ()=>{
+  try{
+    const res = await fetch('/api/user/signout',{
+      method: "POST",
+    })
+    const data = res.json();
+    if(res.ok){
+      dispatch(signOutSuccess(data))
+    }
+  }catch(error){
+    next(error)
+  }
+}
   return (
     <div className="max-w-lg mx-auto p-3 w-full">
       <h1 className="my-7 text-center font-semibold text-3xl">Profile</h1>
@@ -220,7 +231,7 @@ setShowModal(false)
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span className="cursor-pointer" onClick={()=>setShowModal(true)}>Delete Account</span>
-        <span className="cursor-pointer">Sign Out</span>
+        <span className="cursor-pointer" onClick={handlSignOut}>Sign Out</span>
       </div>
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">
