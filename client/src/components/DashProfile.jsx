@@ -14,6 +14,7 @@ import "react-circular-progressbar/dist/styles.css";
 import { updateFailure, updateStart, updateSuccess, deleteUserFailure, signOutSuccess, deleteUserSuccess } from "../redux/user/userSlice.js";
 import { useDispatch } from "react-redux";
 import {HiOutlineExclamationCircle} from 'react-icons/hi'
+import {Link} from 'react-router-dom'
 
 export default function DashProfile() {
   const { currentUser, error } = useSelector((state) => state.user);
@@ -224,7 +225,7 @@ const handlSignOut = async ()=>{
         onChange={handleChange}/>
         <Button
           type="submit"
-          className="bg-gradient-to-r from-green-300 via-green-500 to-green-700"
+          className="bg-gradient-to-t uppercase border-none font-bold from-slate-900 via-cyan-600 to-slate-950 hover:via-cyan-400"
         >
           Update
         </Button>
@@ -233,6 +234,13 @@ const handlSignOut = async ()=>{
         <span className="cursor-pointer" onClick={()=>setShowModal(true)}>Delete Account</span>
         <span className="cursor-pointer" onClick={handlSignOut}>Sign Out</span>
       </div>
+      {currentUser.isAdmin && (
+        <Link to={'/create-post'}>
+          <Button type="button" className="bg-gradient-to-r from-slate-900 via-cyan-600 to-slate-950 w-full uppercase border-none hover:via-cyan-400">
+            Create a Post
+          </Button>
+        </Link>
+      )}
       {updateUserSuccess && (
         <Alert color="success" className="mt-5">
           {updateUserSuccess}
