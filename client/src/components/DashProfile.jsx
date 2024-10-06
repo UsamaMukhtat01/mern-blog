@@ -225,7 +225,7 @@ const handlSignOut = async ()=>{
         onChange={handleChange}/>
         <Button
           type="submit"
-          className="bg-gradient-to-t uppercase border-none font-bold from-slate-900 via-cyan-600 to-slate-950 hover:via-cyan-400"
+          className="dark:bg-gradient-to-t uppercase border-none font-bold dark:from-slate-900 dark:via-cyan-600 dark:to-slate-950 dark:hover:via-cyan-400 bg-cyan-600 hover:bg-cyan-300"
         >
           Update
         </Button>
@@ -236,7 +236,7 @@ const handlSignOut = async ()=>{
       </div>
       {currentUser.isAdmin && (
         <Link to={'/create-post'}>
-          <Button type="button" className="bg-gradient-to-r from-slate-900 via-cyan-600 to-slate-950 w-full uppercase border-none hover:via-cyan-400">
+          <Button type="button" className="dark:bg-gradient-to-r dark:from-slate-900 dark:via-cyan-600 dark:to-slate-950 bg-cyan-600 hover:bg-cyan-300 w-full uppercase border-none dark:hover:via-cyan-400 mt-2">
             Create a Post
           </Button>
         </Link>

@@ -13,20 +13,19 @@ export default function Dashboard() {
       setTab(tabFromUrl)
     }
   }, [location.search]);
-  return <div>
-    <div className="min-h-screen flex flex-row md:flex-row">
-      
-      <div className="md:w-56">
+  return (
+    <div className="min-h-screen flex flex-col sm:flex-row">
+      <div className="sm:w-56">
       {/* sidebar */}
       <DashSidebar/>
       </div>
-
+      <div className="w-full">
       {/* profile */}
       {tab==='profile' && <DashProfile/>}
 
       {/* posts */}
       {tab==='posts' && <DashPosts/>}
-      
+      </div>
     </div>
-  </div>;
+  )
 }
