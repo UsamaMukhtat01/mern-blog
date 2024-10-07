@@ -1,5 +1,5 @@
 import { Sidebar } from 'flowbite-react';
-import { HiUser, HiArrowSmRight, HiDocumentText } from 'react-icons/hi';
+import { HiUser, HiArrowSmRight, HiDocumentText, HiOutlineUserGroup } from 'react-icons/hi';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -46,6 +46,13 @@ return (
                 <Link to='/dashboard?tab=posts'>
                 <Sidebar.Item active={tab==='posts'} icon={HiDocumentText} labelColor='dark' as='div'>
                 Posts
+                </Sidebar.Item>
+                </Link>
+                )}
+                {currentUser.isAdmin && (
+                <Link to='/dashboard?tab=users'>
+                <Sidebar.Item active={tab==='users'} icon={HiOutlineUserGroup} labelColor='dark' as='div'>
+                Users
                 </Sidebar.Item>
                 </Link>
                 )}

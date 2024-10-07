@@ -12,7 +12,7 @@ export default function DashPosts() {
   const [showModal, setShowModal] = useState(false)
   const [postIdToDelete, setPostIdToDelete] = useState(null)
   const [postDeleteMsg, setPostDeleteMsg] = useState('');
-  console.log(userPosts)
+  // console.log(userPosts)
 
   useEffect(()=>{
     const fetchPosts = async ()=>{
@@ -88,7 +88,7 @@ export default function DashPosts() {
             <Table.HeadCell><span>Edit</span></Table.HeadCell>
           </Table.Head>
           {userPosts.map((post)=>(
-            <Table.Body>
+            <Table.Body key={post._id}>
               <Table.Row className='dark:bg-gray-800'>
                 <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
                 <Table.Cell>
