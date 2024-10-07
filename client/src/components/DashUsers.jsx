@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {useSelector} from 'react-redux'
 import {Table, Modal, Button, Alert} from 'flowbite-react'
 import { HiOutlineExclamationCircle } from 'react-icons/hi'
-import { AiOutlineUserDelete } from 'react-icons/ai'
+import { AiOutlineUserDelete } from 'react-icons/ai';
 
 export default function DashPosts() {
 
@@ -12,7 +12,6 @@ export default function DashPosts() {
   const [showModal, setShowModal] = useState(false)
   const [userIdToDelete, setUserIdToDelete] = useState(null)
   const [userDeleteMsg, setUserDeleteMsg] = useState('');
-//   console.log(userPosts)
 
   useEffect(()=>{
     const fetchUsers = async ()=>{
@@ -48,33 +47,33 @@ export default function DashPosts() {
       console.log(error)
     }
   }
-
-//   const handleDeleteUser = async ()=>{
-//     setShowModal(false);
-//     try{
-//       const res = await fetch(`/api/user/deleteuser/${userIdToDelete}/${currentUser._id}`, {
-//         method: "DELETE",
-//       })
-//       const data = await res.json();
-//       if(!res.ok){
-//         console.log(data.message)
-//       }else{
-//         setUserDeleteMsg("Post has been deleted")
-//         setUsers((prev)=> prev.filter((user)=>post._id !== postIdToDelete)
-//       )  
-//       }
-//     }catch(error){
-//       console.log(error);
-
-//     }
-//   }
+    const handleDeleteUser= async ()=>{
+    setShowModal(true)
+      try{
+        const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
+          method: "DELETE",
+        });
+        const data = await res.json();
+        if(res.ok){
+            setUsers((prev)=>prev.filter((user)=>user._id !== userIdToDelete))
+            setShowModal(false)
+          setUserDeleteMsg("User has been deleted")
+        }else{
+        //   dispatch(deleteUserFailure(data.message))
+        //   setUserDeleteMsg("You are not authenticated to delete this user")
+        console.log(data.message)
+        }
+      }catch(error){
+        console.log(error.message)
+      }
+    }
 
   return (
-    <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar-thin scrollbar-track-cyan-300 scrollbar-thumb-gray-400 dark:scrollbar-thumb-slate-500 dark:scrollbar-track-slate-600'>
+    <div className='table-auto overflow-x-scroll md:mx-auto scrollbar-thin scrollbar-track-cyan-300 scrollbar-thumb-gray-400 dark:scrollbar-thumb-slate-500 dark:scrollbar-track-slate-600'>
       {currentUser.isAdmin && users.length > 0? (
         <>
         {userDeleteMsg && (
-          <Alert color='success' className='m-2'>
+          <Alert color='success' className=''>
             {userDeleteMsg}
           </Alert>
         )}
@@ -131,7 +130,7 @@ export default function DashPosts() {
             <h3 className="mb-3 text-lg text-gray-500 dark:text-gray-300">Are you sure you want to delete this user?</h3>
             <div className="flex justify-center gap-4">
             <Button color="failure" 
-            // onClick={handleDeleteUser}
+            onClick={handleDeleteUser}
             >
               Yes I'm sure
             </Button>

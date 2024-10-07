@@ -20,7 +20,7 @@ export default function Dashboard() {
       {/* sidebar */}
       <DashSidebar/>
       </div>
-      <div className="w-full">
+      <div className="w-full p-2">
       {/* profile */}
       {tab==='profile' && <DashProfile/>}
 

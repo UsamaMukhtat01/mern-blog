@@ -11,3 +11,7 @@ body{
 .ql-editor{
     font-size: 1.05rem;
 }
+.post_content p{
+    /* margin-top: 5px; */
+    margin-bottom: 5px;
+}
