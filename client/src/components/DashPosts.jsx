@@ -70,7 +70,7 @@ export default function DashPosts() {
   }
 
   return (
-    <div className='table-auto overflow-x-scroll md:mx-auto p-3 scrollbar scrollbar-track-slate-200 scrollbar-thumb-slate-500 dark:scrollbar-thumb-slate-500 dark:scrollbar-track-slae-800'>
+    <div className='table-auto overflow-x-scroll md:mx-auto scrollbar-thin scrollbar-track-cyan-300 scrollbar-thumb-gray-400 dark:scrollbar-thumb-slate-500 dark:scrollbar-track-slate-600'>
       {currentUser.isAdmin && userPosts.length > 0? (
         <>
         {postDeleteMsg && (
