@@ -33,7 +33,6 @@ export default function Headers() {
         <span className="px-2 py-1 bg-gradient-to-br from-green-400 to-blue-600 rounded-lg text-white">Usama's</span>
         <span>Blog</span>
       </Link>
-
       <form>
         <TextInput
           type="text"
