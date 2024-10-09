@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {Button, Textarea, Alert} from 'flowbite-react'
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Comment from './Comment';
 
 export default function CommentSection({postId}) {
 
@@ -10,7 +11,8 @@ export default function CommentSection({postId}) {
     const [comment, setComment] = useState('')
     const [commentError, setCommentError] = useState(null);
     const [commentMsg, setCommentMsg] = useState(null);
-    
+    const [comments, setComments] = useState([]);
+
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if(comment.length > 200){
@@ -34,12 +36,33 @@ export default function CommentSection({postId}) {
             }
             if(res.ok){
                 setComment('')
-                setCommentMsg("Comment Sent")
+                setCommentMsg("Comment Sent.")
+                // setComment([...comments])
             }
         }catch(error){
             setCommentError(error.message)   
         }
     }
+// Call to get comments************************************************
+    useEffect(()=>{
+        const getComments = async()=>{
+            try{
+                const res = await fetch(`/api/comment/getPostComments/${postId}`)
+                const data = await res.json();
+                if(res.ok){
+                    setComments(data)
+                }else{
+                    console.log("Failed to fetch comments")
+                }
+            }catch(error){
+                console.log(error.message)
+            }
+        }
+        if(postId){
+            getComments();
+        }
+    }, [postId])
+
 // useEffect just for timout the error handlings******************************
     useEffect(() => {
         if (commentError || commentMsg) {
@@ -97,6 +120,18 @@ export default function CommentSection({postId}) {
                     )}
         </form>
       )}
+      {comments.length === 0? (
+        <p className='text-sm my-5'>No comments yet!</p>
+      ):(
+        <div className='flex items-center mt-2 gap-2'>
+            <p>{comments.length>1? 'Comments':'Comment'}</p>
+            <div className='w-fit py-1 px-2 rounded-lg border border-gray-500 text-xs'>
+                <p>{comments.length}</p>
+            </div>
+        </div>
+      )}
+        {comments.map(comment =>(<Comment key={comment._id} comment={comment}></Comment>))}
     </div>
   )
 }
+

@@ -54,11 +54,11 @@ export const updateUser = async (req, res, next) => {
 
 export const deleteUser = async (req, res, next) =>{
   if (!req.user.isAdmin && req.user.id !== req.params.userId){
-    return next(errorHandler(403, "You are not allowed to delete this user"))
+    return next(errorHandler(403, "You are not allowed to delete this user."))
   }
   try{
     await User.findByIdAndDelete(req.params.userId)
-    res.status(200).json("User deleted successfully")
+    res.status(200).json("User deleted successfully.")
   }catch(error){
     next(error) 
   }
@@ -102,6 +102,19 @@ export const getUsers = async (req, res, next)=>{
       totalUsers,
       lastMonthUsers,
     })
+  }catch(error){
+    next(error)
+  }
+}
+
+export const getUser = async (req, res, next)=>{
+  try{
+    const user = await User.findById(req.params.userId);
+    if(!user){
+      return next(errorHandler(404, "User not found in comment route"))
+    }
+    const {password, ...rest} = user._doc;
+    res.status(200).json(rest);
   }catch(error){
     next(error)
   }
