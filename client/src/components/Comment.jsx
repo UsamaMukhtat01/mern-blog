@@ -5,7 +5,7 @@ import { FaThumbsDown, FaThumbsUp } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Textarea, Button } from "flowbite-react";
 
-export default function Comment({ comment, onLike, onEdit }) {
+export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
   const { currentUser } = useSelector((state) => state.user);
   const [isEditing, setIsEditing] = useState(false);
@@ -30,6 +30,7 @@ export default function Comment({ comment, onLike, onEdit }) {
     setIsEditing(true);
     setEditedContent(comment.content);
   };
+
 
   const handleSave = async ()=>{
     try{
@@ -107,22 +108,34 @@ export default function Comment({ comment, onLike, onEdit }) {
               >
                 <FaThumbsUp />
               </button>
-              <p>
+              <p className="">
                 {comment.numberOfLikes > 0 &&
                   comment.numberOfLikes +
                     " " +
                     (comment.numberOfLikes === 1 ? "like" : "likes")}
               </p>
+              <div className="justify-between w-full flex">
               {currentUser &&
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (
                   <button
-                    type="button"
-                    onClick={handleEdit}
-                    className="text-gray-400 hover:text-blue-400"
+                  type="button"
+                  onClick={handleEdit}
+                  className="text-gray-400 hover:text-blue-400"
                   >
                     Edit
                   </button>
                 )}
+              {currentUser &&
+                (currentUser._id === comment.userId || currentUser.isAdmin) && (
+                  <button
+                  type="button"
+                  onClick={()=>onDelete(comment._id)}
+                  className="text-red-400 hover:underline justify-end"
+                  >
+                    Delete
+                  </button>
+                )}
+                </div>
             </div>
           </div>
         )}
