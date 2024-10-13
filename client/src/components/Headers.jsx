@@ -1,17 +1,37 @@
 import { Navbar, TextInput, Button, Dropdown, Avatar } from 'flowbite-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FaMoon, FaSun } from 'react-icons/fa';
 import {useSelector, useDispatch} from 'react-redux';
 import {toggleTheme} from '../redux/theme/themeSlice'
 import { signOutSuccess } from '../redux/user/userSlice';
+import { useEffect, useState } from 'react';
+import { Navigate } from 'react-router-dom';
 
 export default function Headers() {
   const path = useLocation().pathname;
   const dispatch = useDispatch();
   const {currentUser} = useSelector(state => state.user);
   const {theme} = useSelector((state)=>state.theme)
+  const location = useLocation();
+  const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get('searchTerm');
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+  }, [location.search]);
 
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set('searchTerm', searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`)
+  }
 
   const handlSignOut = async ()=>{
     try{
@@ -33,16 +53,18 @@ export default function Headers() {
         <span className="px-2 py-1 bg-gradient-to-br from-green-400 to-blue-600 rounded-lg text-white">Usama's</span>
         <span>Blog</span>
       </Link>
-      <form>
+      <form onSubmit={handleSubmit}>
         <TextInput
           type="text"
           placeholder="Search..."
           rightIcon={AiOutlineSearch}
-          className="hidden lg:inline"
+          className="hidden sm:inline"
+          value={searchTerm}
+          onChange={(e)=>setSearchTerm(e.target.value)}
         />
       </form>
 
-      <Button className="w-12 h-10 lg:hidden" color="red" pill>
+      <Button className="w-12 h-10 sm:hidden" color="red" pill>
         <AiOutlineSearch />
       </Button>
 
