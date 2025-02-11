@@ -6,6 +6,9 @@ import cookieParser from "cookie-parser";
 import postRoutes from './routes/post.route.js'
 import commentRoutes from './routes/comment.route.js'
 import path from 'path';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const mongoUrl = process.env.MONGO_URI
 const run = async () => {
