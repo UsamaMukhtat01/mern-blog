@@ -36,12 +36,20 @@ run().then(() => {
   });
 });
 
+app.use(cors({
+  origin: 'http://localhost:5173',  // Allow all origins (not recommended for production)
+  // origin: '*',  // Allow all origins (not recommended for production)
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use("/api/user", userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/post', postRoutes)
 app.use('/api/comment', commentRoutes)
 
 app.use(express.static(path.join(_dirname, '/client/dist')));
+
 
 app.get('*', (req, res) =>{
     res.sendFile(path.join(_dirname, 'client', 'dist', 'index.html'))
