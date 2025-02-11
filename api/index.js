@@ -7,15 +7,19 @@ import postRoutes from './routes/post.route.js'
 import commentRoutes from './routes/comment.route.js'
 import path from 'path';
 
-
-mongoose
-  .connect("mongodb://localhost:27017/")
-  .then(() => {
-    console.log("Database connected successfully");
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+const mongoUrl = process.env.MONGO_URI
+const run = async () => {
+  try {
+    await mongoose.connect(mongoUrl, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+    console.log(mongoUrl === "mongodb://localhost:27017/" ? "connected to local MongoDB!": "connected to Atlas MongoDB!");
+  } catch (error) {
+    console.error("MongoDB Connection Error:", error);
+    process.exit(1);
+  }
+};
 
 const _dirname = path.resolve();
 
@@ -24,8 +28,12 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000!");
+const PORT = process.env.PORT || 3000;
+
+run().then(() => {
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
 });
 
 app.use("/api/user", userRoutes);
